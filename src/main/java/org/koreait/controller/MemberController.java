@@ -1,13 +1,16 @@
-package org.koreait;
+package org.koreait.controller;
+import org.koreait.util.Util;
+import org.koreait.dto.Member;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MemberController {
+public class MemberController extends Controller {
 
-    Scanner sc;
-    List<Member> members;
+    private Scanner sc;
+    private List<Member> members;
+    private String cmd;
 
     private int lastMemberId = 3;
 
@@ -16,7 +19,20 @@ public class MemberController {
         members = new ArrayList<>();
     }
 
-    public void doJoin() {
+    public void doAction(String cmd, String actionMethodName) {
+        this.cmd = cmd;
+
+        switch (actionMethodName) {
+            case "join":
+                doJoin();
+                break;
+            default:
+                System.out.println("명령어 확인 (actionMethodName) 오류");
+                break;
+        }
+    }
+
+    private void doJoin() {
         System.out.println("==회원가입==");
         int id = lastMemberId + 1;
         String regDate = Util.getNow();
@@ -36,24 +52,19 @@ public class MemberController {
             loginPw = sc.nextLine();
             System.out.print("비밀번호 확인 : ");
             String loginPwConfirm = sc.nextLine();
-
             if (loginPw.equals(loginPwConfirm) == false) {
                 System.out.println("비번 다시 확인해");
                 continue;
             }
             break;
         }
-
         System.out.print("이름 : ");
         String name = sc.nextLine();
-
         Member member = new Member(id, regDate, loginId, loginPw, name);
         members.add(member);
-
         System.out.println(id + "번 회원이 가입되었습니다");
         lastMemberId++;
     }
-
     private boolean isJoinableLoginId(String loginId) {
         for (Member member : members) {
             if (member.getLoginId().equals(loginId)) {
@@ -62,7 +73,6 @@ public class MemberController {
         }
         return true;
     }
-
     public void makeTestData() {
         System.out.println("회원 테스트 데이터 생성");
         members.add(new Member(1, Util.getNow(), "test1", "test1", "test1"));
