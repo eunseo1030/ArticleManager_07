@@ -1,9 +1,14 @@
 package org.koreait.controller;
-
+import org.koreait.dto.Member;
 public abstract class Controller {
+    protected static Member loginedMember = null;
+
     public abstract void doAction(String cmd, String actionMethodName);
 
-    public void makeTestData() {
+    public static boolean isLogined() {
+        return loginedMember != null;
+    }
 
+    public void makeTestData() {
     }
 }
