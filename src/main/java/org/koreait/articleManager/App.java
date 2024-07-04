@@ -34,8 +34,6 @@ public class App {
                 continue;
             }
 
-
-
             String actionMethodName = cmdBits[1];
             String forLoginCheck = controllerName + "/" + actionMethodName;
 

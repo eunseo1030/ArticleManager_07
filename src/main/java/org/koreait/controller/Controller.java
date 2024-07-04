@@ -1,5 +1,8 @@
 package org.koreait.controller;
 import org.koreait.dto.Member;
+
+import java.util.List;
+
 public abstract class Controller {
     protected static Member loginedMember = null;
 
